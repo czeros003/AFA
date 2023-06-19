@@ -53,7 +53,7 @@ mm_atrous_lena(4, 0.1);
 ## Results
 Tak dodaje sie plik, opisz rezultaty wnioski (z plikow w folderze results)
 
-![Figure 1](results/Figure 1.png "Figure 1") 
+![Figure 1](<results/Figure 1.png> "Figure 1") 
 
 ## Documentation
 This documentation provides an overview of the modified MATLAB files in the project.
