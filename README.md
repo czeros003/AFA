@@ -12,9 +12,9 @@ The objective of this project is to reconstruct an image using the 'mm_atrous_le
 2. [Example](#example)
 3. [Results](#results)
 4. [Documentation](#documentation)
-	- [mm_atrous_lena.m](#mm_atrous_lena.m)
-	- [dyadup.m](#dyadup.m)
-	- [limitations.m](#limitations.m)
+	- [mm_atrous_lena](#mm_atrous_lena)
+	- [dyadup](#dyadup)
+	- [limitations](#limitations)
 
 ## How to use
 
@@ -60,7 +60,7 @@ Tak dodaje sie plik, opisz rezultaty wnioski (z plikow w folderze results)
 ## Documentation
 This documentation provides an overview of the modified MATLAB files in the project.
 
-### mm_atrous_lena.m
+### mm_atrous_lena
 This script implements the image reconstruction algorithm using the 'dyadup' function from the Wavelet Toolbox.
 
 #### Usage
@@ -76,14 +76,14 @@ reconstructedImage = mm_atrous_lena(inputImage);
 imshow(reconstructedImage);
 ```
 
-### dyadup.m
+### dyadup
 This file is a modified version of the 'dyadup' function from the Wavelet Toolbox. The modification was made to handle compatibility issues in the MATLAB Online environment.
 
 #### Modifications
 - The modified 'dyadup' function includes additional error handling and compatibility checks for MATLAB Online.
 - Certain functions or operations that are not supported in MATLAB Online have been replaced or modified to ensure compatibility.
 
-### limitations.m
+### limitations
 This script outlines the limitations of the project and provides suggestions for alternative approaches if the Wavelet Toolbox is not available.
 #### Usage
 ```matlab
