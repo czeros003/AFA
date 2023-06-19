@@ -203,4 +203,3 @@ end
 [xsize,ysize] = size(mod_max{1});
 data_len = xsize*ysize;
 compressionRate = 100 - 100*(zero_len/data_len)
-
