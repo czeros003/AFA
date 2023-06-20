@@ -1,4 +1,4 @@
-# AFA Project
+# AFA Project - Wojciech Czerski s20458 and Kinga Kalbarczyk s20474
 **Image Reconstruction Project**
 This project aims to perform image reconstruction using the 'mm_atrous_lena' algorithm in MATLAB. The algorithm utilizes the Wavelet Toolbox for image processing.
 
