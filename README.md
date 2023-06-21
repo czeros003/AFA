@@ -41,7 +41,7 @@ In the MATLAB command window, run the following command:
 ```matlab
 image_name = 'Lena.bmp';
 num_levels = 3;
-threshold = [25, 25, 10];
+threshold = [25, 25, 10]; % Lepsze wyniki dla threshold = [100, 10, 1];
 
 [reconstructed_image, compression_ratio, snr] = recon_mm2(image_name, num_levels, threshold);
 ```
