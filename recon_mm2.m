@@ -1,56 +1,57 @@
-function recon_mm2(lvl, Threshold, image_name)
-[X, map] = imread(image_name);
-Lena = ind2gray(X, map);
-y = Lena(50:177, 50:177);
-save_orig = y;
-[nr, nc] = size(y);
-
-[a, D1_MM, D2_MM, gprime, hprime] = mm_atrous_tum(lvl, Threshold);
-
-u_d1 = (abs(D1_MM) > 0);
-u_d2 = (abs(D2_MM) > 0);
-
-p = atrous_up(lvl, hprime, gprime, a, D1_MM, D2_MM);
-
-f = zeros(1, nr * nc);
-pold = zeros(1, nr * nc);
-r = p(1, :);
-for i = 2:nr
-    r = [r p(i, :)];
-end
-
-Lpold = zeros(1, nr * nc);
-imax = 16;
-i = 0;
-while i < imax
-    i = i + 1;
-    [fnew, pnew, rnew, Lp] = ConjGrad_2d(f, p, pold, r, u_d1, u_d2, lvl, Lpold);
-    f = fnew;
-    pold = p(1, :);
-    for j = 2:nr
-        pold = [pold p(j, :)];
+function [reconstructed_image, compression_ratio, snr] = recon_mm2(image_name, num_levels, threshold)
+    % Wczytaj obrazek
+    image = imread(image_name);
+    
+    % Konwertuj obrazek na skalę szarości, jeśli jest kolorowy
+    if size(image, 3) > 1
+        image = rgb2gray(image);
     end
-
-    p = pnew(1:nc);
-    for j = 1:nr - 1
-        p = [p; pnew(1 + (j * nc):(j + 1) * nc)];
+    
+    % Wykonaj dekompozycję falkową na num_levels poziomów
+    [C, S] = wavedec2(image, num_levels, 'haar');
+    
+    % Inicjalizuj macierze do przechowywania progowanych współczynników
+    thresholded_C = cell(1, num_levels+1);
+    
+    % Progowanie dla każdego poziomu dekompozycji
+    for i = 1:num_levels
+        % Wyznacz próg dla danego poziomu dekompozycji
+        level_threshold = threshold_selection(C(S(i, 1):S(i, 2), S(i, 3):S(i, 4)), threshold);
+        
+        % Progowanie twarde i miękkie
+        thresholded_C{i} = hard_threshold(C(S(i, 1):S(i, 2), S(i, 3):S(i, 4)), level_threshold);
+        %thresholded_C{i} = soft_threshold(C(S(i, 1):S(i, 2), S(i, 3):S(i, 4)), level_threshold);
     end
-    r = rnew;
-    Lpold = Lp;
+    
+    % Rekonstrukcja obrazu z progowanych współczynników
+    reconstructed_image = waverec2([thresholded_C{:}], S, 'haar');
+    
+    % Oblicz stopień kompresji
+    original_size = numel(image);
+    compressed_size = sum(cellfun(@numel, thresholded_C));
+    compression_ratio = original_size / compressed_size;
+    
+    % Oblicz stosunek sygnału do szumu (SNR) dla zrekonstruowanego obrazu
+    noise = image - reconstructed_image;
+    signal_power = sum(image(:).^2) / numel(image);
+    noise_power = sum(noise(:).^2) / numel(noise);
+    snr = 10 * log10(signal_power / noise_power);
 end
 
-f_image = f(1:nc);
-for j = 1:nr - 1
-    f_image = [f_image; f(1 + (j * nc):(j + 1) * nc)];
+function level_threshold = threshold_selection(approximation, global_threshold)
+    % Analiza zawartości szumu w aproksymacji
+    noise_std = std2(approximation);
+    
+    % Wyznaczanie progu dla danego poziomu dekompozycji
+    level_threshold = global_threshold * noise_std;
 end
 
-var_s = (std2(save_orig))^2;
-var_n = (std2(double(save_orig) - f_image))^2;
-snr = 10 * log10(var_s / var_n);
+function thresholded_coeffs = hard_threshold(coeffs, threshold)
+    % Progowanie twarde
+    thresholded_coeffs = coeffs .* (abs(coeffs) >= threshold);
+end
 
-figure
-imshow(save_orig, [])
-title('Original Image');
-figure
-imshow(f_image, [])
-title(['Reconstructed Image from the Modulus Maxima - SNR = ', num2str(snr), 'dB']);
+function thresholded_coeffs = soft_threshold(coeffs, threshold)
+    % Progowanie miękkie
+    thresholded_coeffs = sign(coeffs) .* max(abs(coeffs) - threshold, 0);
+end
