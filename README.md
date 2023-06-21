@@ -53,4 +53,5 @@ If we are using **threshold = [25,25,10]** and **num_levels = 3** we get result 
 ![Figure 1](<results/Figure_1.png> "Figure 1") 
 
 Stopień kompresji: 1.28
+
 Stosunek sygnału do szumu (SNR): -45.96 dB
