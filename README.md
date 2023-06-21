@@ -43,11 +43,11 @@ Below is an example usage of the project.
 
 In the MATLAB command window, run the following command:
 ```matlab
-mm_atrous_lena(lvl, Threshold);
-```
-Replace **lvl** and **Threshold** with the desired values for the reconstruction level and threshold. For example:
-```matlab
-mm_atrous_lena(4, 0.1);
+image_name = 'Lena.bmp';
+num_levels = 3;
+threshold = [25, 25, 10];
+
+[reconstructed_image, compression_ratio, snr] = recon_mm2(image_name, num_levels, threshold);
 ```
 
 ## Results

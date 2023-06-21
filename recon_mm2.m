@@ -1,56 +1,81 @@
-function recon_mm2(lvl, Threshold, image_name)
-[X, map] = imread(image_name);
-Lena = ind2gray(X, map);
-y = Lena(50:177, 50:177);
-save_orig = y;
-[nr, nc] = size(y);
-
-[a, D1_MM, D2_MM, gprime, hprime] = mm_atrous_tum(lvl, Threshold);
-
-u_d1 = (abs(D1_MM) > 0);
-u_d2 = (abs(D2_MM) > 0);
-
-p = atrous_up(lvl, hprime, gprime, a, D1_MM, D2_MM);
-
-f = zeros(1, nr * nc);
-pold = zeros(1, nr * nc);
-r = p(1, :);
-for i = 2:nr
-    r = [r p(i, :)];
-end
-
-Lpold = zeros(1, nr * nc);
-imax = 16;
-i = 0;
-while i < imax
-    i = i + 1;
-    [fnew, pnew, rnew, Lp] = ConjGrad_2d(f, p, pold, r, u_d1, u_d2, lvl, Lpold);
-    f = fnew;
-    pold = p(1, :);
-    for j = 2:nr
-        pold = [pold p(j, :)];
+function [reconstructed_image, compression_ratio, snr] = recon_mm2(image_name, num_levels, threshold)
+    % Wczytaj obrazek
+    image = imread(image_name);
+    
+    % Konwertuj obrazek na skalę szarości, jeśli jest kolorowy
+    if size(image, 3) > 1
+        image = rgb2gray(image);
     end
-
-    p = pnew(1:nc);
-    for j = 1:nr - 1
-        p = [p; pnew(1 + (j * nc):(j + 1) * nc)];
+    
+    % Wykonaj dekompozycję falkową na num_levels poziomów
+    [C, S] = wavedec2(image, num_levels, 'haar');
+    
+    % Inicjalizuj macierz do przechowywania progowanych współczynników
+    thresholded_C = C;
+    
+    % Progowanie dla każdego poziomu dekompozycji
+    for i = 1:num_levels
+        % Wyznacz granice poziomu dekompozycji
+        start_index = sum(S(1:i, 1)) + 1;
+        end_index = start_index + prod(S(i+1, :)) - 1;
+        
+        % Wyznacz aproksymację na danym poziomie
+        approximation = thresholded_C(start_index:end_index);
+        
+        % Wyznacz próg dla danego poziomu dekompozycji
+        level_threshold = threshold(i); % Użyj podanego progu dla danego poziomu
+        
+        % Progowanie twarde lub miękkie na danym poziomie
+        thresholded_C(start_index:end_index) = soft_threshold(approximation, level_threshold);
     end
-    r = rnew;
-    Lpold = Lp;
+    
+    % Rekonstrukcja obrazu z progowanych współczynników
+    reconstructed_image = waverec2(thresholded_C, S, 'haar');
+    
+    % Oblicz stopień kompresji
+    original_size = numel(image);
+    compressed_size = nnz(thresholded_C); % Liczba niezerowych elementów
+    compression_ratio = original_size / compressed_size;
+    
+    % Oblicz stosunek sygnału do szumu (SNR) dla zrekonstruowanego obrazu
+    image_double = im2double(image); % Konwersja na typ double
+    reconstructed_double = im2double(reconstructed_image); % Konwersja na typ double
+    noise = image_double - reconstructed_double;
+    
+    signal_power = sum(image_double(:).^2) / numel(image_double);
+    noise_power = sum(noise(:).^2) / numel(noise);
+    snr = 10 * log10(signal_power / noise_power);
+    
+    % Wyświetlanie oryginalnego obrazka
+    figure;
+    subplot(1, 2, 1);
+    imshow(image);
+    title('Oryginalny obrazek');
+    
+    % Wyświetlanie zrekonstruowanego obrazka
+    subplot(1, 2, 2);
+    imshow(reconstructed_image);
+    title('Zrekonstruowany obrazek');
+
+    % Wyświetlanie wyników
+    fprintf('Stopień kompresji: %.2f\n', compression_ratio);
+    fprintf('Stosunek sygnału do szumu (SNR): %.2f dB\n', snr);
 end
 
-f_image = f(1:nc);
-for j = 1:nr - 1
-    f_image = [f_image; f(1 + (j * nc):(j + 1) * nc)];
+function level_threshold = threshold_selection(approximation, threshold)
+    % Analiza zawartości szumu w aproksymacji
+    % Wyznaczanie progu dla danego poziomu dekompozycji
+    
+    % Przykładowa implementacja wyznaczania progu na podstawie analizy zawartości szumu
+    % Możesz dostosować tę funkcję do własnych potrzeb
+    noise_estimate = std2(approximation); % Estymacja szumu jako odchylenie standardowe aproksymacji
+    level_threshold = threshold * noise_estimate;
 end
 
-var_s = (std2(save_orig))^2;
-var_n = (std2(double(save_orig) - f_image))^2;
-snr = 10 * log10(var_s / var_n);
-
-figure
-imshow(save_orig, [])
-title('Original Image');
-figure
-imshow(f_image, [])
-title(['Reconstructed Image from the Modulus Maxima - SNR = ', num2str(snr), 'dB']);
+function thresholded_coefficients = soft_threshold(coefficients, threshold)
+    % Progowanie miękkie
+    
+    % Przykładowa implementacja progowania miękkiego
+    thresholded_coefficients = sign(coefficients) .* max(abs(coefficients) - threshold, 0);
+    % Możesz dostosować tę funkcję do własnych potrzeb
+end
