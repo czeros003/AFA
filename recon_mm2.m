@@ -23,7 +23,7 @@ function [reconstructed_image, compression_ratio, snr] = recon_mm2(image_name, n
         approximation = thresholded_C(start_index:end_index);
         
         % Wyznacz próg dla danego poziomu dekompozycji
-        level_threshold = threshold_selection(approximation, threshold);
+        level_threshold = threshold(i); % Użyj podanego progu dla danego poziomu
         
         % Progowanie twarde lub miękkie na danym poziomie
         thresholded_C(start_index:end_index) = soft_threshold(approximation, level_threshold);
