@@ -49,6 +49,6 @@ threshold = [25, 25, 10];
 ## Results
 
 If we are using **threshold = [25,25,10]** and **num_levels = 3** we get result such as
-![Figure 1](<results/Figure 1.png> "Figure 1") 
+![Figure 1](<results/Figure_1.png> "Figure 1") 
 Stopień kompresji: 1.28
 Stosunek sygnału do szumu (SNR): -45.96 dB
