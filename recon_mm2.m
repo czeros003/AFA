@@ -6,7 +6,7 @@ y=Lena(50:177,50:177);
 save_orig = y;
 [nr,nc]=size(y);
 
-[a, D1_MM, D2_MM, gprime, hprime] = mm_atrous_lena(lvl,Threshold, image_name);
+[a, D1_MM, D2_MM, gprime, hprime, compressionRate] = mm_atrous_lena(lvl,Threshold, image_name);
 
 % Progowanie dla każdego poziomu dekompozycji
 for k = 1:lvl
@@ -66,10 +66,16 @@ var_s = (std2(save_orig))^2;
 var_n = (std2(double(save_orig) - f_image))^2;
 snr = 10*log10(var_s/var_n);
 
-figure
+figure('Name', 'Wynik - Oryginał vs Rekonstrukcja');
+% Display save_orig image
+subplot(2,1,1);
 imshow(save_orig,[]);
 title('Original Image');
-figure
+
+% Display f_image
+subplot(2,1,2);
 imshow(f_image,[]);
 title(['Reconstructed Image from the Modulus Maxima - SNR = ',num2str(snr),'dB']);
+xlabel(['Wyliczony stopień kompresji - ',num2str(compressionRate)]);
+
 end

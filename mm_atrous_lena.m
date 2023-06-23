@@ -1,4 +1,4 @@
-function [y, D1_MM, D2_MM, gprime, hprime] = mm_atrous_tum(decomp_times,Threshold, image_name)
+function [y, D1_MM, D2_MM, gprime, hprime, compressionRate] = mm_atrous_lena(decomp_times,Threshold, image_name)
 
 %Spline wavelet filters
 hf=[.125 .375 .375 .125].*sqrt(2);
@@ -189,7 +189,7 @@ for k = 1:decomp_times
   end
 end
 
-figure;
+figure('Name', 'Modulus Maximum');
 zero_len = 0;
 for k = 1:decomp_times
    subplot(decomp_times,1,k)
@@ -197,10 +197,9 @@ for k = 1:decomp_times
    zero_len = zero_len + length(find(mod_max{k}==0));
    if k == 1
      title('Modulus Maximum');
-  end
+   end
 end
 
 [xsize,ysize] = size(mod_max{1});
 data_len = xsize*ysize;
 compressionRate = 100 - 100*(zero_len/data_len)
-
