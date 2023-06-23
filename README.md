@@ -1,7 +1,11 @@
 # AFA Projekt Rekonstrukcji Obrazu
 **Wojciech Czerski s20458 i Kinga Kalbarczyk s20474**
 
-Ten projekt ma na celu przeprowadzenie rekonstrukcji obrazu przy użyciu algorytmu `recon_mm2` w MATLAB. Algorytm wykorzystuje narzędzia Wavelet Toolbox do przetwarzania obrazów.
+Ten projekt ma na celu przeprowadzenie rekonstrukcji obrazu przy użyciu algorytmu `recon_mm2` w MATLAB. Algorytm wykorzystuje narzędzia Wavelet Toolbox do przetwarzania obrazów. 
+
+Zmodyfikowane na potrzeby projketu zostały pliki:
+- [recon_mm2](#recon_mm2)
+- [mm_atrous_lena](#mm_atrous_lena)
 
 ## Przegląd projektu
 
