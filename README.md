@@ -56,16 +56,17 @@ recon_mm2(levels, threshold, image_name);
 ```
 
 ## Wyniki
-![Wynik kompresji](results/wynik_final.png)
-![Modulus Maximum](results/modulus_maximum.png)
+![Wynik kompresji](results/wynik_final.jpg)
+
+![Modulus Maximum](results/modulus_maximum.jpg)
 
 **Reconstructed Image from the Modulus Maxima - SNR =** `17.8953 dB`
 **Wyliczony stopień kompresji =** `99.6826`
 
-### Stopień kompresji:
+### Stopień kompresji
 Wyliczony stopień kompresji wynosi 99.6826. Oznacza to, że model osiągnął wysoki stopień kompresji, co jest pozytywnym wynikiem. Im wyższy stopień kompresji, tym mniejsze zajętość danych, co może być korzystne w przypadku przechowywania i przesyłania obrazów.
 
-### Stosunek sygnału do szumu (SNR):
+### Stosunek sygnału do szumu (SNR)
 SNR wynosi 17.8953 dB. SNR jest miarą jakości rekonstrukcji obrazu i informuje o stosunku sygnału obrazu do poziomu szumu. Wyższy SNR oznacza lepszą jakość rekonstrukcji, gdzie większa część informacji obrazowej została zachowana. Wartość 17.8953 dB wskazuje na przyzwoitą jakość rekonstrukcji, choć może być jeszcze pole do poprawy.
 
 ### Podsumowanie
