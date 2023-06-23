@@ -16,8 +16,8 @@ Celem tego projektu jest rekonstrukcja obrazu przy użyciu algorytmu `recon_mm2`
 	- [Stosunek sygnału do szumu](#stosunek-sygnału-do-szumu)
 	- [Podsumowanie](#podsumowanie)
 3. [Dokumentacja](#dokumentacja)
-	-[recon_mm2](#recon_mm2)
-	-[mm_atrous_lena](#mm_atrous_lena)
+	- [recon_mm2](#recon_mm2)
+	- [mm_atrous_lena](#mm_atrous_lena)
 
 ## Wymagania
 Aby uruchomić ten projekt, będziesz potrzebować:
