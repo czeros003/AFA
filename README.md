@@ -15,6 +15,7 @@ Celem tego projektu jest rekonstrukcja obrazu przy użyciu algorytmu `recon_mm2`
 	- [Stopień kompresji](#stopień-kompresji)
 	- [Stosunek sygnału do szumu](#stosunek-sygnału-do-szumu)
 	- [Podsumowanie](#podsumowanie)
+3. [Dokumentacja](#dokumentacja)
 
 ## Wymagania
 Aby uruchomić ten projekt, będziesz potrzebować:
@@ -32,6 +33,7 @@ Aby uruchomić ten projekt, będziesz potrzebować:
 	- obraz wejściowy do MATLAB. Możesz użyć funkcji `image_name = 'twoja_nazwa_obrazka.png';`, aby wczytać obraz z pliku.
 	- ustal liczbę poziomów za pomocą `levels = twoja_liczba`
 	- ustal progi za pomocą `threshold = [liczba1, liczba2, ...]`
+
 	Pamiętaj, aby **liczba progów** miała taką samą długość co **liczba poziomów !**
 	`levels = threshold.length`
 
