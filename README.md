@@ -7,6 +7,8 @@ Zmodyfikowane na potrzeby projketu zostały pliki:
 - [recon_mm2](#recon_mm2)
 - [mm_atrous_lena](#mm_atrous_lena)
 
+W folderze `results` zawarte są wyniki.
+
 ## Przegląd projektu
 
 Celem tego projektu jest rekonstrukcja obrazu przy użyciu algorytmu `recon_mm2`, który wykorzystuje transformację falkową atrous. Algorytm przyjmuje obraz wejściowy i wykonuje analizę wieloskalową, używając transformacji falkowej do dekompozycji obrazu na różne pasma częstotliwościowe. Następnie stosuje zmodyfikowaną wersję transformacji falkowej atrous, aby wzmocnić konkretne detale i cechy obrazu. Ostatecznie algorytm odtwarza obraz przy użyciu odwrotnej transformacji falkowej.
