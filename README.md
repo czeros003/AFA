@@ -9,12 +9,8 @@ The objective of this project is to reconstruct an image using the 'mm_atrous_le
 ## Table of Contents
 1. [Requirements](#requirements)
 	- [Usage](#usage)
-2. [Example](#example)
-3. [Results](#results)
-4. [Documentation](#documentation)
-	- [mm_atrous_lena](#mm_atrous_lena)
-	- [dyadup](#dyadup)
-	- [limitations](#limitations)
+	- [Example](#example)
+2. [Results](#results)
 
 ## Requirements
 To run this project, you will need the following:
@@ -45,47 +41,17 @@ In the MATLAB command window, run the following command:
 ```matlab
 image_name = 'Lena.bmp';
 num_levels = 3;
-threshold = [25, 25, 10];
+threshold = [25, 25, 10]; % Lepsze wyniki dla threshold = [100, 10, 1];
 
 [reconstructed_image, compression_ratio, snr] = recon_mm2(image_name, num_levels, threshold);
 ```
 
 ## Results
-Tak dodaje sie plik, opisz rezultaty wnioski (z plikow w folderze results)
 
-![Figure 1](<results/Figure 1.png> "Figure 1") 
+If we are using **threshold = [25,25,10]** and **num_levels = 3** we get result such as
 
-## Documentation
-This documentation provides an overview of the modified MATLAB files in the project.
+![Figure 1](<results/Figure_1.png> "Figure 1") 
 
-### mm_atrous_lena
-This script implements the image reconstruction algorithm using the 'dyadup' function from the Wavelet Toolbox.
+Stopień kompresji: 1.28
 
-#### Usage
-
-```matlab
-% Load input image
-inputImage = imread('lena.jpg');
-
-% Run the image reconstruction algorithm
-reconstructedImage = mm_atrous_lena(inputImage);
-
-% Display the reconstructed image
-imshow(reconstructedImage);
-```
-
-### dyadup
-This file is a modified version of the 'dyadup' function from the Wavelet Toolbox. The modification was made to handle compatibility issues in the MATLAB Online environment.
-
-#### Modifications
-- The modified 'dyadup' function includes additional error handling and compatibility checks for MATLAB Online.
-- Certain functions or operations that are not supported in MATLAB Online have been replaced or modified to ensure compatibility.
-
-### limitations
-This script outlines the limitations of the project and provides suggestions for alternative approaches if the Wavelet Toolbox is not available.
-#### Usage
-```matlab
-% Run the limitations script
-limitations;
-```
-
+Stosunek sygnału do szumu (SNR): -45.96 dB
