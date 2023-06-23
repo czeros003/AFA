@@ -1,4 +1,3 @@
-
 function recon_mm2(lvl,Threshold, image_name)
 [X,map] = imread(image_name);
 Lena = ind2gray(X,map);
