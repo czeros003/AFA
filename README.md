@@ -1,57 +1,70 @@
-# AFA Project - Wojciech Czerski s20458 and Kinga Kalbarczyk s20474
-**Image Reconstruction Project**
-This project aims to perform image reconstruction using the 'mm_atrous_lena' algorithm in MATLAB. The algorithm utilizes the Wavelet Toolbox for image processing.
+# AFA Projekt Rekonstrukcji Obrazu
+**Wojciech Czerski s20458 i Kinga Kalbarczyk s20474**
+Ten projekt ma na celu przeprowadzenie rekonstrukcji obrazu przy użyciu algorytmu "recon_mm2" w MATLAB. Algorytm wykorzystuje narzędzia Wavelet Toolbox do przetwarzania obrazów.
 
-## Project Overview
+## Przegląd projektu
 
-The objective of this project is to reconstruct an image using the 'mm_atrous_lena' algorithm, which employs the a trous wavelet transform. The algorithm takes an input image and performs a multiresolution analysis using the wavelet transform to decompose the image into different frequency bands. It then applies a modified version of the a trous wavelet transform to enhance specific details and features of the image. Finally, the algorithm reconstructs the image using the inverse wavelet transform.
+Celem tego projektu jest rekonstrukcja obrazu przy użyciu algorytmu "recon_mm2", który wykorzystuje transformację falkową atrous. Algorytm przyjmuje obraz wejściowy i wykonuje analizę wieloskalową, używając transformacji falkowej do dekompozycji obrazu na różne pasma częstotliwościowe. Następnie stosuje zmodyfikowaną wersję transformacji falkowej atrous, aby wzmocnić konkretne detale i cechy obrazu. Ostatecznie algorytm odtwarza obraz przy użyciu odwrotnej transformacji falkowej.
 
-## Table of Contents
-1. [Requirements](#requirements)
-	- [Usage](#usage)
-	- [Example](#example)
-2. [Results](#results)
+## Spis treści
+1. [Wymagania](#wymagania)
+	- [Instrukcja](#instrukcja)
+	- [Przykład](#przykład)
+2. [Wyniki](#wyniki)
+	- [Stopień kompresji](#stopien-kompresji)
+	- [Stosunek sygnału do szumu (SNR)](#stosunek-sygnału-do-szumu)
+	- [Podsumowanie](#podsumowanie)
 
-## Requirements
-To run this project, you will need the following:
+## Wymagania
+Aby uruchomić ten projekt, będziesz potrzebować:
 
-- MATLAB with access to the Wavelet Toolbox.
-- An input image for reconstruction.
+- MATLAB z dostępem do narzędzi Wavelet Toolbox.
+- Obraz wejściowy do rekonstrukcji.
 
-### Usage
+### Instrukcja
 
-1. Open MATLAB and ensure that you have access to the Wavelet Toolbox.
+1. Otwórz MATLAB i upewnij się, że masz dostęp do narzędzi Wavelet Toolbox.
 
-2. Set the working directory to the location of the project files.
+2. Ustaw katalog roboczy na lokalizację plików projektu.
 
-3. Load the input image into MATLAB. You can use the `imread` function to read the image from a file.
+3. Wczytaj:
+	- obraz wejściowy do MATLAB. Możesz użyć funkcji `image_name = 'twoja_nazwa_obrazka.png';`, aby wczytać obraz z pliku.
+	- ustal liczbę poziomów za pomocą `levels = twoja_liczba`
+	- ustal progi za pomocą `threshold = [liczba1, liczba2, ...]`
+	Pamiętaj, aby **liczba progów** miała taką samą długość co **liczba poziomów !**
+	`levels = threshold.length`
 
-4. Run the 'mm_atrous_lena' script in MATLAB. This script implements the image reconstruction algorithm using the 'dyadup' function from the Wavelet Toolbox.
+4. Uruchom skrypt "recon_mm2" w MATLAB. Skrypt ten implementuje algorytm rekonstrukcji obrazu przy użyciu funkcji "dyadup" z narzędzi Wavelet Toolbox.
 
-5. If you encounter an error related to the Wavelet Toolbox, ensure that you have the necessary license or try alternative image reconstruction techniques available in MATLAB.
+5. Jeśli napotkasz błąd związanym z narzędziami Wavelet Toolbox, upewnij się, że masz wymagane licencje lub spróbuj alternatywnych technik rekonstrukcji obrazu dostępnych w MATLAB.
 
-6. Review the output image. The reconstructed image will be displayed in a MATLAB figure window.
+6. Przejrzyj wyjściowy obraz. Odtworzony obraz zostanie wyświetlony w oknie figury MATLAB.
 
-7. Experiment with different parameters and input images to achieve desired results.
+7. Eksperymentuj z różnymi parametrami (`levels`, `threshold`) i obrazami wejściowymi (`image_name`), aby uzyskać pożądane rezultaty.
 
-### Example
-Below is an example usage of the project.
+### Przykład
+Poniżej znajduje się przykładowe użycie projektu.
 
-In the MATLAB command window, run the following command:
+W oknie poleceń MATLAB wprowadź następujące polecenie:
 ```matlab
 image_name = 'Lena.bmp';
-num_levels = 3;
-threshold = [25, 25, 10]; % Lepsze wyniki dla threshold = [100, 10, 1];
+levels = 3;
+threshold = [25, 25, 10];
 
-[reconstructed_image, compression_ratio, snr] = recon_mm2(image_name, num_levels, threshold);
+recon_mm2(levels, threshold, image_name);
 ```
 
-## Results
+## Wyniki
+![Wynik kompresji](results/wynik final.png)
 
-If we are using **threshold = [25,25,10]** and **num_levels = 3** we get result such as
+**Reconstructed Image from the Modulus Maxima - SNR =** `17.8953 dB`
+**Wyliczony stopień kompresji =** `99.6826`
 
-![Figure 1](<results/Figure_1.png> "Figure 1") 
+### Stopień kompresji:
+Wyliczony stopień kompresji wynosi 99.6826. Oznacza to, że model osiągnął wysoki stopień kompresji, co jest pozytywnym wynikiem. Im wyższy stopień kompresji, tym mniejsze zajętość danych, co może być korzystne w przypadku przechowywania i przesyłania obrazów.
 
-Stopień kompresji: 1.28
+### Stosunek sygnału do szumu (SNR):
+SNR wynosi 17.8953 dB. SNR jest miarą jakości rekonstrukcji obrazu i informuje o stosunku sygnału obrazu do poziomu szumu. Wyższy SNR oznacza lepszą jakość rekonstrukcji, gdzie większa część informacji obrazowej została zachowana. Wartość 17.8953 dB wskazuje na przyzwoitą jakość rekonstrukcji, choć może być jeszcze pole do poprawy.
 
-Stosunek sygnału do szumu (SNR): -45.96 dB
+### Podsumowanie
+Ten model osiągnął wysoki stopień kompresji, co jest korzystne z punktu widzenia efektywnego wykorzystania miejsca, ale jakość rekonstrukcji może być dalej doskonalona w celu zwiększenia SNR i zachowania większej liczby detali obrazu.
