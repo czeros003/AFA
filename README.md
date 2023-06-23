@@ -1,5 +1,6 @@
 # AFA Projekt Rekonstrukcji Obrazu
 **Wojciech Czerski s20458 i Kinga Kalbarczyk s20474**
+
 Ten projekt ma na celu przeprowadzenie rekonstrukcji obrazu przy użyciu algorytmu "recon_mm2" w MATLAB. Algorytm wykorzystuje narzędzia Wavelet Toolbox do przetwarzania obrazów.
 
 ## Przegląd projektu
@@ -11,8 +12,8 @@ Celem tego projektu jest rekonstrukcja obrazu przy użyciu algorytmu "recon_mm2"
 	- [Instrukcja](#instrukcja)
 	- [Przykład](#przykład)
 2. [Wyniki](#wyniki)
-	- [Stopień kompresji](#stopien-kompresji)
-	- [Stosunek sygnału do szumu (SNR)](#stosunek-sygnału-do-szumu)
+	- [Stopień kompresji](#stopień-kompresji)
+	- [Stosunek sygnału do szumu (SNR)](#stosunek-sygnału-do-szumu-(SNR))
 	- [Podsumowanie](#podsumowanie)
 
 ## Wymagania
@@ -55,7 +56,8 @@ recon_mm2(levels, threshold, image_name);
 ```
 
 ## Wyniki
-![Wynik kompresji](results/wynik final.png)
+![Wynik kompresji](results/wynik_final.png)
+![Modulus Maximum](results/modulus_maximum.png)
 
 **Reconstructed Image from the Modulus Maxima - SNR =** `17.8953 dB`
 **Wyliczony stopień kompresji =** `99.6826`
