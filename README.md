@@ -151,7 +151,7 @@ Funkcja `mm_atrous_lena` wykonuje dekompozycję falkową na obrazie Lena oraz ob
 9. Generuje wykresy dla analizy wyników, w tym przybliżenia, szczegóły, moduł transformacji i kąt wektora transformacji.
 10. Oblicza stopień kompresji obrazu na podstawie liczby zerowych współczynników modułu maksymalnego.
 
-### Wykresy
+#### Wykresy
 
 1. Przybliżenia dla każdego poziomu dekompozycji.
 2. Szczegóły horyzontalne dla każdego poziomu dekompozycji.
